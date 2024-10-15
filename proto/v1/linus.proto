@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package linus.v1;
+
+import "proto/v1/common/utils.proto";
+
+message PaymentRequest {
+  string user_id = 1;
+  double amount = 2;
+  string payment_method = 3; // e.g., MPESA, PayPal, Stripe
+}
+
+message PaymentResponse {
+  string transaction_id = 1;
+  string status = 2;
+}
+
+message RefundRequest {
+  string transaction_id = 1;
+}
+
+message RefundResponse {
+  string refund_id = 1;
+  string status = 2;
+}
+
+service PaymentService {
+  rpc ProcessPayment(PaymentRequest) returns (PaymentResponse);
+  rpc RefundPayment(RefundRequest) returns (RefundResponse);
+}
